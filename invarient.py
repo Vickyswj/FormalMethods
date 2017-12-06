@@ -312,11 +312,18 @@ def reverse(U):
 #函数用来读取一个文件,然后在单独的设计一个函数用来判断是不是满足不变性质
 def visit(p):    
     #p='/Users/macbook/Documents/Check/test.dot'
+    p=path
     f=open(p,'r')
     lines=f.readlines()
     
+    #找到第一个开始的位置
+    I=1
+    for line in lines:
+        if(line.split(';')[0]=='{rank=same'):
+            I=I+1                
+    
     u=[]
-    for i in range(5,len(lines)-1):
+    for i in range(I,len(lines)-1):
         s=lines[i].replace('\"','').replace('{','').replace('}','').replace('\n','').split('->')
         m=[]
         for j in s:
