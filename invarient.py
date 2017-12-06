@@ -385,7 +385,7 @@ def Invariant(path):
                 del node[0] 
                 
         if(b==1):
-            reverse(U)      #为了演示,这里还是将这个遍历出来
+           # reverse(U)      #为了演示,这里还是将这个遍历出来,但是现在的话不需要显示出来
             return 'yes'
         else:
             reverse(U)
