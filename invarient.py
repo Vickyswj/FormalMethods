@@ -309,7 +309,6 @@ def reverse(U):
 
 #函数用来读取一个文件,然后在单独的设计一个函数用来判断是不是满足不变性质
 def visit(p):    
-    #p='/Users/macbook/Documents/Check/test.dot'
     f=open(p,'r')
     lines=f.readlines()
     
