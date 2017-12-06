@@ -298,3 +298,96 @@ def get_ts(p):
     path=get_graph(p)
     return path
     
+
+
+#函数用来遍历栈
+def reverse(U):
+    for i in range(len(U)):
+        print(U[i])        
+
+
+
+#函数用来读取一个文件,然后在单独的设计一个函数用来判断是不是满足不变性质
+def visit(p):    
+    #p='/Users/macbook/Documents/Check/test.dot'
+    f=open(p,'r')
+    lines=f.readlines()
+    
+    #找到第一个开始的位置
+    I=1
+    for line in lines:
+        if(line.split(';')[0]=='{rank=same'):
+            I=I+1                
+    
+    u=[]
+    for i in range(I,len(lines)-1):
+        s=lines[i].replace('\"','').replace('{','').replace('}','').replace('\n','').split('->')
+        m=[]
+        for j in s:
+            l=[]
+            for k in range(len(j.split(','))):
+                l.append(j.split(',')[k])
+            m.append(tuple(l))
+        u.append(m)
+    
+    node=[]                     #用栈来存储这个信息
+    tmp_node=[]                 #临时的栈用来存储
+    node.append(u[0][0])        #给定一个初始节点
+    tmp_node.append(u[0][0])    #给定一个初始节点
+    
+    
+    '''设置一个变量来描述字段的长度, 这个变量的长度是在计算前后一致就将这个执行终止
+    '''
+    
+    r=node[-1]                  #
+    
+    while(1):
+        while(1):
+             locs1=len(node)
+             for i in range(len(u)):
+                 if(u[i][0]==r and (u[i][1] not in node)):
+                     node.append(u[i][1])
+                     tmp_node.append(u[i][1])
+                     r=u[i][1]
+                     break  #算法在设计的时候break是终止这一层的循环
+             locs=len(node)
+             
+             if(locs1==locs):
+                 r=tmp_node.pop()
+                 break
+             
+        if(len(tmp_node)==0):
+            break
+    
+    return node
+
+            
+def Invariant(path):
+    #主函数主要是用来处理一致性质
+        fi=tuple(['c1', 'c2'])         #设置原子公式Φ
+        U=[]
+        b=True
+        
+        p=get_ts(path)                 #获取打印的地址的路径,获取到的是一个地址数据,地址存储的已经是字符串
+        
+        node=visit(p)                  #设置访问
+        
+        while(1):
+            if(len(node)==0 or b==False):  #判断终止条件
+                break
+            
+            if((node[0][0]==fi[0]) and node[0][1]==fi[1]):  #判断可满足性
+                U.append(node[0])                           #这个是作为反例来讲解的
+                b=False
+                
+            else:
+                U.append(node[0])
+                del node[0] 
+                
+        if(b==1):
+            reverse(U)      #为了演示,这里还是将这个遍历出来
+            return 'yes'
+        else:
+            reverse(U)
+            return 'no'
+            
