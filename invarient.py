@@ -125,7 +125,7 @@ def interleaving(p):  #用来对两个进程进行interleaving操作
                 temp[0] = j + '_' + i[0]
                 temp[3] = j + '_' + i[3]
                 t.append(temp)
-    path=p[0].replace(p[0].split('/')[-1],'test.txt')
+    path=p[0].replace(p[0].split('/')[-1],'mutex.txt')
     f=open(path,'w')
    # f = open('/Users/macbook/Documents/Model/ModelChecking/test.txt', 'w')  # 对两个程序并行操作后，写入新的文件
 
@@ -215,7 +215,7 @@ def get_graph(p):
     global list
     s = list(itertools.product(Loc, *var))  #状态s是loc和所有变量的笛卡尔积
     
-    path=p[0].replace(p[0].split('/')[-1],'test.dot')
+    path=p[0].replace(p[0].split('/')[-1],'mutex.dot')
     f=open(path,'w')
 
     #f=open('/Users/macbook/Documents/Model/ModelChecking/test.dot','w')
@@ -296,7 +296,7 @@ def get_ts(p):
     '''
     while len(p)>1:  #只要输入文件数不为1,则两两interleaving，得出最终结果后保存
         interleaving(p)
-        p[0]=p[0].replace(p[0].split('/')[-1],"test.txt")
+        p[0]=p[0].replace(p[0].split('/')[-1],"mutex.txt")
         del  p[1]
     path=get_graph(p)
     return path
@@ -312,7 +312,6 @@ def reverse(U):
 #函数用来读取一个文件,然后在单独的设计一个函数用来判断是不是满足不变性质
 def visit(p):    
     #p='/Users/macbook/Documents/Check/test.dot'
-    p=path
     f=open(p,'r')
     lines=f.readlines()
     
