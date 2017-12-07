@@ -127,7 +127,6 @@ def interleaving(p):  #用来对两个进程进行interleaving操作
                 t.append(temp)
     path=p[0].replace(p[0].split('/')[-1],'mutex.txt')
     f=open(path,'w')
-   # f = open('/Users/macbook/Documents/Model/ModelChecking/test.txt', 'w')  # 对两个程序并行操作后，写入新的文件
 
     Loc = Cartesian(Loc1, Loc2)
     f.write('Loc=')
@@ -215,7 +214,6 @@ def get_graph(p):
     path=p[0].replace(p[0].split('/')[-1],'mutex.dot')
     f=open(path,'w')
 
-    #f=open('/Users/macbook/Documents/Model/ModelChecking/test.dot','w')
     f.write('digraph G { \n')
     result=[]#此列表用来存储结果
     node=[]#此集合用来存储可达的结点
@@ -291,11 +289,12 @@ def get_ts(p):
     '''输入的文件的地址应该是一个数组,数组的几个部分分别是文件的绝地地址,函数做了两件事情,分别
     是构造PG图和把那个构造的文件的地址获取到
     '''
-    while len(p)>1:  #只要输入文件数不为1,则两两interleaving，得出最终结果后保存
-        interleaving(p)
-        p[0]=p[0].replace(p[0].split('/')[-1],"mutex.txt")
-        del  p[1]
-    path=get_graph(p)
+    path=p
+    while len(path)>1:  #只要输入文件数不为1,则两两interleaving，得出最终结果后保存
+        interleaving(path)
+        path[0]=path[0].replace(p[0].split('/')[-1],"mutex.txt")
+        del  path[1]
+    path=get_graph(path)
     return path
     
 
@@ -390,3 +389,7 @@ def Invariant(path):
             reverse(U)
             return 'no'
             
+        
+        
+        
+        
