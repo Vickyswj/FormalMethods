@@ -1,9 +1,9 @@
 Loc={n1_n2,n1_w2,n1_c2,w1_n2,w1_w2,w1_c2,c1_n2,c1_w2,c1_c2}
 Loc0={n1_n2}
 Var={y}
-y={0,1}
+y={0,1,2}
 Act={a,b,c,a,b,c}
-g0={(y==1) and (y==1)}
+g0={(y==2) and (y==2)}
 Transition
     (n1_n2,True,a,w1_n2)
     (n1_w2,True,a,w1_w2)
