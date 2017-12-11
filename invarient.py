@@ -369,7 +369,7 @@ def TesInvariant(fi,node):
         
     
 def Invariant(path,fi):
-    #主函数主要是用来处理一致性质
+    #主函数主要是用来处理一致性质,fi是一个元组
         #fi=tuple(['c1', 'c2'])         #设置原子公式Φ
         U=[]
         b=True
