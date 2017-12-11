@@ -359,8 +359,49 @@ def visit(p):
     
     return node
 
+'''该函数用来检验是否满足不变性质,这个写成一个函数可以用来检验是不是满足的
+不同的函数是不一样的,这个在进行检验的时候是不一样的,可以根据要求自行修改'''
+def TesInvariant(fi,node):
+    b=True
+    if((node[0]==fi[0]) and node[1]==fi[1]):
+        b=False
+    return b
+        
+    
+def Invariant(path,fi):
+    #主函数主要是用来处理一致性质
+        #fi=tuple(['c1', 'c2'])         #设置原子公式Φ
+        U=[]
+        b=True
+        
+        p=get_ts(path)                 #获取打印的地址的路径,获取到的是一个地址数据,地址存储的已经是字符串
+        
+        node=visit(p)                  #设置访问
+        
+        while(1):
+            if(len(node)==0 or b==False):  #判断终止条件
+                break
             
-def Invariant(path):
+            if(TesInvariant(fi,node[0])==False):  #判断可满足性
+                U.append(node[0])                           #这个是作为反例来讲解的
+                b=False
+                
+            else:
+                U.append(node[0])
+                del node[0] 
+                
+        if(b==1):
+           # reverse(U)      #为了演示,这里还是将这个遍历出来,但是现在的话不需要显示出来
+            return 'yes'
+        else:
+            reverse(U)
+            return 'no'
+            
+        
+        
+'''
+#这部分的脚本是原始的脚本,不变形的函数没有给出,修改后的是可以的. 
+def Invariant1(path):
     #主函数主要是用来处理一致性质
         fi=tuple(['c1', 'c2'])         #设置原子公式Φ
         U=[]
@@ -391,7 +432,7 @@ def Invariant(path):
             
         
         
-        
+    '''   
         
         
         
