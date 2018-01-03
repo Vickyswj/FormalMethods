@@ -49,7 +49,7 @@ def  getformula(formula):
 formula
 
 flag=0 #这个标签主要是为了进行标识的信息,输出的参数是0或者是1
-x='x1'
+x='x4'
 
 strs=formula[formula.find('=')+1:].split('+')
 
@@ -57,14 +57,26 @@ strs=formula[formula.find('=')+1:].split('+')
 
 strs1=''
 for i in range(len(strs)):
+    #i=3
     if(x in strs[i]):
-        if(flag==1):
-            strss=strs[i].split('*')
-            id=strs[i].split('*').index(x)
-            del strss[strs[i].split('*').index(x)]
-            strs[i]=strss[0]
-        elif(flag==0):
-            strs[i]=None
+        if('#' in strs[i]):
+            x='#'+x
+            flag=1-flag
+            if(flag==1):
+                strss=strs[i].split('*')
+                id=strs[i].split('*').index(x)
+                del strss[strs[i].split('*').index(x)]
+                strs[i]=strss[0]
+            elif(flag==0):
+                strs[i]=None
+        else:
+            if(flag==1):
+                strss=strs[i].split('*')
+                id=strs[i].split('*').index(x)
+                del strss[strs[i].split('*').index(x)]
+                strs[i]=strss[0]
+            elif(flag==0):
+                strs[i]=None
     else:
         pass
     
@@ -84,16 +96,25 @@ def Shannon(formula,flag,x):
     
     strs=formula[formula.find('=')+1:].split('+')
     #假如存在这个字符串,然后进行判断,否则的话不做操作
-    strs1=''
+    formulas=''
     for i in range(len(strs)):
         if(x in strs[i]):
-            if(flag==1):
-                strss=strs[i].split('*')
-                #id=strs[i].split('*').index(x)
-                del strss[strs[i].split('*').index(x)]
-                strs[i]=strss[0]
-            elif(flag==0):
-                strs[i]=None
+            if('#' in strs[i]):
+                x='#'+x
+                flag=1-flag
+                if(flag==1):
+                    strss=strs[i].split('*')
+                    del strss[strs[i].split('*').index(x)]
+                    strs[i]=strss[0]
+                elif(flag==0):
+                    strs[i]=None
+            else:
+                if(flag==1):
+                    strss=strs[i].split('*')
+                    del strss[strs[i].split('*').index(x)]
+                    strs[i]=strss[0]
+                elif(flag==0):
+                    strs[i]=None
         else:
             pass
         
@@ -101,9 +122,11 @@ def Shannon(formula,flag,x):
         if(strs[i]==None):
             pass
         else:
-            strs1+=strs[i]+'+'
+            formulas+=strs[i]+'+'
     
-    strs1+=strs[-1]
+    formulas+=strs[-1]
+    
+    return formulas
         
 
 #做了这个操作之后就应该生成一条路径
